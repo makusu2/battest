@@ -127,5 +127,5 @@ for(;;)
         OrganizeToXML
         Remove-Item $($dataFolder+"\point*")
     }
-    Start-Sleep 1
+    Start-Sleep 60
 }
