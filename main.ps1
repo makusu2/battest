@@ -114,6 +114,27 @@ function AddTxtToXml
         }
     }
 }
+function CreateDirs
+{
+    $dataDir = GetDataFolder
+    $allPointsName = $dataDir + "\allPoints.xml"
+    $numDataName = $dataDir + "\numData.txt"
+    if (!(test-path $dataDir))
+    {
+        New-Item -ItemType Directory -Force -Path $dataDir
+    }
+    if (!(test-path $allPointsName))
+    {
+        "<points>" > $allPointsName
+        "`t<point>" >> $allPointsName
+        "`t</point>" >> $allPointsName
+        "</points>" >> allPointsName
+    }
+    if (!(test-path $numDataName))
+    {
+        "0" > $numDataName
+    }
+}
 Adminize
 $dataFolder = GetDataFolder
 $numDataFile = $dataFolder + "\numData.txt"
