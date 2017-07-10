@@ -36,7 +36,7 @@ function makeNewDataFile
     return $dataFile
 }
 function GetDataFolder { $dataFolder = "C:\makuTemp\batData"; return $dataFolder }
-function Get-Temperature #https://stackoverflow.com/questions/39738494/get-cpu-temperature-in-cmd-power-shell
+function Get-Temperature #Works very badly
 {
     $t = gwmi MSAcpi_ThermalZoneTemperature -Namespace "root/wmi"
     $rawTemp = $t.CurrentTemperature[0]
@@ -128,7 +128,7 @@ function CreateDirs
         "<points>" > $allPointsName
         "`t<point>" >> $allPointsName
         "`t</point>" >> $allPointsName
-        "</points>" >> allPointsName
+        "</points>" >> $allPointsName
     }
     if (!(test-path $numDataName))
     {
@@ -136,6 +136,7 @@ function CreateDirs
     }
 }
 Adminize
+CreateDirs
 $dataFolder = GetDataFolder
 $numDataFile = $dataFolder + "\numData.txt"
 for(;;)

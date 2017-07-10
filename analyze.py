@@ -36,24 +36,55 @@ def getPoints():
         newPoint = DataPoint(id,dataDict)
         points.append(newPoint)
     return points
+def getPercentAverages(points):
+    numericLists = dict()
+    for point in points:
+        for key in point.dataDict:
+            value = point.dataDict[key]
+            if isinstance(value, float):
+                if key in numericLists:
+                    numericLists[key].append(value)
+                else:
+                    numericLists[key] = [value]
+    percentsPossible = list(set(numericLists['batteryPercent']))
+    percentCounts = {percent:numericLists['batteryPercent'].count(percent) for percent in percentsPossible} 
+    percentTotals = {percent:{val:0 for val in numericLists if not (val == 'batteryPercent')} for percent in percentsPossible}
+    #print(percentTotals)
+    print("ieoga     "+str(len(numericLists['batteryPercent'])))
+    for i in range(len(points)):
+        #print("ITHING   "+str(i))
+        batteryPercent = numericLists['batteryPercent'][i]
+        for valKey in numericLists:
+            if valKey == 'batteryPercent':
+                continue
+            valList = numericLists[valKey]
+            val = valList[i]
+            #print(batteryPercent)
+            #print(valKey)
+            percentTotals[batteryPercent][valKey] += val
+    #print(percentTotals)
+    percentAvgs = {percent:{val:percentTotals[percent][val]/percentCounts[percent] for val in percentTotals[percent]} for percent in percentsPossible}
+    for percent in percentsPossible:
+        percentAvgs[percent]['count'] = percentCounts[percent]
+    return percentAvgs
+    #print(percentAvgs)
 points = getPoints()
-numericLists = dict()
-for point in points:
-    for key in point.dataDict:
-        value = point.dataDict[key]
-        if isinstance(value, float):
-            if key in numericLists:
-                numericLists[key].append(value)
-            else:
-                numericLists[key] = [value]
-#for key in numericLists:
-#    value = numericLists[key]
-#    print(str(key)+": "+str(len(value)))
+avgs = getPercentAverages(points)
+attribs = [att for att in avgs[list(avgs.keys())[0]]]
+valLists = {val:[] for val in attribs}
+for percent in avgs:
+    for val in avgs[percent]:
+        valLists[val].append(avgs[percent][val])
+#print(valLists)
+    
+#counts = [avgs[percent]['count'] for percent in avgs]
 
-yvar = numericLists['batteryPercent']
-xvar = list(range(0,len(yvar)))
+desiredY = 'usedMemory'
+
+xvar = valLists['usedMemory']
+yvar = valLists['count']
 #print(str(xvar))
 #print(str(yvar))
-trace = go.Scatter(x=xvar,y=yvar)
+trace = go.Scatter(x=xvar,y=yvar,mode='markers')
 data=[trace]
 plotter.plot(data,filename='thingie')
