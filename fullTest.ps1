@@ -11,7 +11,7 @@ function HeavyTestVal
     {
         Start-Sleep 10
         $currentSeconds = $stopwatch.Elapsed.TotalSeconds
-        $currentSeconds > heavyResultSeconds.txt
+        $currentSeconds > C:\batteryTest\heavyResultSeconds.txt
     }
     Stop-Process $furObject
 }
@@ -26,7 +26,7 @@ function LightTestVal
     {
         Start-Sleep 10
         $currentSeconds = $stopwatch.Elapsed.TotalSeconds
-        $currentSeconds > lightResultSeconds.txt
+        $currentSeconds > C:\batteryTest\lightResultSeconds.txt
     }
     $stopwatch.Elapsed.TotalSeconds
 }
@@ -43,20 +43,11 @@ function WaitForStart
         Write-Host "Warning - Battery is not fully charged at start of test"
     }
 }
-function GetBatteryPercent
-{
-    $batteryPercent = (gwmi win32_battery).estimatedChargeRemaining
-    return $batteryPercent
-}
-function ComputerIsPluggedIn
-{
-    $unplugged = $($(gwmi win32_battery).BatteryStatus -eq 1)
-    return $(!($unplugged))
-}
 
 
 
 
+. .\helpers.ps1 #importing helper methods I think
 $testVal = Read-Host -Prompt "Would you like to run a heavy test (1) or a light test (2)?"
 if ($testVal -eq 1)
 {
