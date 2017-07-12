@@ -1,5 +1,0 @@
-Okay, so temp rarely works. 
-
-
-Maybe:
-Have three values. First, disable all battery-consuming stuff. Then, enable them, raise brightness, and maybe run a benchmark or something. Then, maybe have user use the computer normally? Maybe don't do that.

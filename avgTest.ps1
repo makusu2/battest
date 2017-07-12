@@ -42,17 +42,21 @@ function StartBatteryUse #Calls GetDataPiece and stores the data
     {
         return
     }
-    if (!(test-path C:\makuTemp\avgBatteryData.txt))
+    if (!(test-path C:\batteryTest\avgBatteryData.txt))
     {
-        $dataPiece > C:\makuTemp\avgBatteryData.txt
+        $dataPiece > C:\batteryTest\avgBatteryData.txt
     }
     else
     {
-        $dataPiece >> C:\makuTemp\avgBatteryData.txt
+        $dataPiece >> C:\batteryTest\avgBatteryData.txt
     }
 }
 
 . .\helpers.ps1
+if (!(test-path C:\batteryTest\))
+{
+    md C:\batteryTest\
+}
 while ($(1 -eq 1))
 {
     while ($(ComputerIsPluggedIn))

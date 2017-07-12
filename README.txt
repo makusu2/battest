@@ -1,0 +1,2 @@
+For heavy test or light test, run main.ps1 while plugged in and at full battery power. Heavy test requires that FurMark be installed in C:\Program Files (x86)\Geeks3D\Benchmarks\FurMark\FurMark.exe
+For an average test (much more complicated), add avgTest.ps1 to startup programs to run in the background.
