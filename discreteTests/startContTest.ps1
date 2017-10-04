@@ -1,0 +1,1 @@
+powershell.exe -windowstyle hidden -file C:\batteryTest\avgTest.ps1

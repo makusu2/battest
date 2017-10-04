@@ -1,0 +1,1 @@
+PowerShell -executionpolicy remotesigned -windowstyle hidden -file C:\batteryTest\avgTest.ps1

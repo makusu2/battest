@@ -1,2 +1,2 @@
-For heavy test or light test, run main.ps1 while plugged in and at full battery power. Heavy test requires that FurMark be installed in C:\Program Files (x86)\Geeks3D\Benchmarks\FurMark\FurMark.exe
-For an average test (much more complicated), add avgTest.ps1 to startup programs to run in the background.
+For heavy test or light test, charge to full battery, then open Powershell as admin and navigate to the "manualTests" directory. Then, dot-source fullTest.ps1 (. .\fullTest.ps1), and use the command "ManualMain -save C:\save\to\directory -mode heavyOrLight", with the arguments replaced with those of your choice. Heavy test requires that FurMark be installed in C:\Program Files (x86)\Geeks3D\Benchmarks\FurMark\FurMark.exe
+For an average test (more complicated), run installAvgTester.ps1 NOT as admin. That will also add it to your startup programs and save the data to C:\batteryTest\avgBatteryData.txt. You can use getResults.py to see the score, in minutes per percent.

@@ -1,3 +1,16 @@
+<#
+Steven Pitts
+Maku
+10/4/17
+Wentworth Institute of Technology DTS
+
+Input args: None
+Output args: None
+Void args: After each session of the laptop being unplugged, writes 'percent-seconds' to C:\batteryTest\avgBatteryData.txt, where percent is the change in battery percent and seconds are the number of seconds that passed during the session.
+
+Warning: The PowerShell write statement is dumb and may encode the file in different ways.
+
+#>
 function GetDataPiece #Returns a dash-separated string of seconds during discharge and percent discharge
 {
     $stopwatch = New-Object -TypeName System.Diagnostics.Stopwatch 
@@ -44,15 +57,30 @@ function StartBatteryUse #Calls GetDataPiece and stores the data
     }
     if (!(test-path C:\batteryTest\avgBatteryData.txt))
     {
-        $dataPiece > C:\batteryTest\avgBatteryData.txt
+        #$dataPiece > C:\batteryTest\avgBatteryData.txt
+		write-output $dataPiece | out-file -encoding ascii C:\batteryTest\avgBatteryData.txt
+		#Not writing in ascii if I don't
     }
     else
     {
-        $dataPiece >> C:\batteryTest\avgBatteryData.txt
+        write-output $dataPiece | out-file -encoding ascii -append C:\batteryTest\avgBatteryData.txt
     }
 }
+function GetBatteryPercent
+{
+    $batteryPercent = (gwmi win32_battery).estimatedChargeRemaining
+    return $batteryPercent
+}
+function ComputerIsPluggedIn
+{
+    $unplugged = $($(gwmi win32_battery).BatteryStatus -eq 1)
+    return $(!($unplugged))
+}
 
-. .\helpers.ps1
+
+
+
+
 if (!(test-path C:\batteryTest\))
 {
     md C:\batteryTest\
